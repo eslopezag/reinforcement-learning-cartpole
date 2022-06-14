@@ -1,6 +1,9 @@
 # Saved Python objects:
 *.dill
 
+# Saved agents folder:
+saved_agents/
+
 # Scratchpad notebooks:
 scribble.ipynb
 playground.ipynb
