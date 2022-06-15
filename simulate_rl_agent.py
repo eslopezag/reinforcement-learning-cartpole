@@ -4,6 +4,7 @@ import sys
 import gym
 
 from rl_agents.agents import load_agent
+from env_wrappers import RBFObservations
 
 agent_name = sys.argv[1]
 agent_folder = f'./saved_agents/{agent_name}'
@@ -12,6 +13,8 @@ agent.set_mode('inference')
 
 env = gym.make('CartPole-v1')
 
+if agent_name == 'rbf_linear':
+    env = RBFObservations(env)
 
 for i_episode in range(1):
     observation = env.reset()

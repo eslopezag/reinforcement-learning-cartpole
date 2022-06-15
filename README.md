@@ -32,7 +32,13 @@ make train algorithm=<ALGORITHM>
 python cartpole_agents.py <ALGORITHM>
 ```
 
-Where `<ALGORITHM>` is one of `sarsa` (average reward SARSA), `q_learning`, `avg_reward_expected_sarsa`, or `discounted_expected_sarsa`.
+Where `<ALGORITHM>` is one of:
+
+- `rfb_linear` (linear function approximation Q Learning with features based on radial basis functions)
+- `sarsa` (average reward SARSA)
+- `q_learning`
+- `avg_reward_expected_sarsa`
+- `discounted_expected_sarsa`
 
 To train an Reinforcement Learning agent that was already trained, run one of the following:
 

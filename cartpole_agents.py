@@ -14,6 +14,7 @@ from rl_agents.agents import (
     SemiGradExpectedSarsaAgent
 )
 from custom_agent_history import CustomAgentHistory
+from env_wrappers import RBFObservations
 
 
 def get_cartpole_agent(
@@ -25,23 +26,31 @@ def get_cartpole_agent(
     """
     env = gym.make('CartPole-v1')
 
-    model = tf.keras.Sequential([
-        tf.keras.layers.Dense(32, input_shape=(4,), activation='elu'),
-        tf.keras.layers.Dense(64, activation='elu'),
-        tf.keras.layers.Dense(128, activation='elu'),
-        tf.keras.layers.Dense(2),
-    ])
+    if name == 'rbf_linear':
+        env = RBFObservations(env)
+
+        model = tf.keras.Sequential([
+            tf.keras.layers.Dense(2, input_shape=(3973,))
+        ])
+
+    else:
+        model = tf.keras.Sequential([
+            tf.keras.layers.Dense(32, input_shape=(4,), activation='elu'),
+            tf.keras.layers.Dense(64, activation='elu'),
+            tf.keras.layers.Dense(128, activation='elu'),
+            tf.keras.layers.Dense(2),
+        ])
 
     def is_terminal(state):
-        return (np.abs(state[0]) > 2.4 or np.abs(state[2]) > 12 * np.pi / 180)
+        return np.abs(state[0]) > 2.4 or np.abs(state[2]) > 12 * np.pi / 180
 
-    if name in ('q_learning', 'discounted_expected_sarsa'):
+    if name in ('rbf_linear', 'q_learning', 'discounted_expected_sarsa'):
         Q = GradQApproximator(
             model=model,
             optimizer=tf.keras.optimizers.Adam(0.0005),
             target_delay_steps=128,
             batch_size=2048,
-            state_dim=4,
+            state_dim=3973 if name == 'rbf_linear' else 4,
             buffer_size=16384,
             batches_per_step=1,
             start_training_buffer_size=1,
@@ -81,7 +90,7 @@ def get_cartpole_agent(
             ),
         )
 
-    elif name == 'q_learning':
+    elif name in ('rbf_linear', 'q_learning'):
         agent = SemiGradQLearningAgent(
             env=env,
             Q=Q,
