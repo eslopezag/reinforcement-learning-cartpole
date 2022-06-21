@@ -40,7 +40,7 @@ Where `<ALGORITHM>` is one of:
 - `avg_reward_expected_sarsa`
 - `discounted_expected_sarsa`
 
-To train an Reinforcement Learning agent that was already trained, run one of the following:
+To simulate an Reinforcement Learning agent that was already trained, run one of the following:
 
 ```shell
 make simulate algorithm=<ALGORITHM>
@@ -48,4 +48,14 @@ make simulate algorithm=<ALGORITHM>
 
 ```shell
 python simulate_rl_agent.py <ALGORITHM>
+```
+
+To generate a GIF with the simulation of an agent that was already trained, run one of the following:
+
+```shell
+make generate_gif algorithm=<ALGORITHM>
+```
+
+```shell
+python generate_gif_from_agent.py <ALGORITHM>
 ```

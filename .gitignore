@@ -4,6 +4,10 @@
 # Saved agents folder:
 saved_agents/
 
+# Saved image files:
+*.gif
+*.png
+
 # Scratchpad notebooks:
 scribble.ipynb
 playground.ipynb

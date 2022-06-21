@@ -23,7 +23,6 @@ for i_episode in range(1):
         env.render(mode='human')
         print(observation)
 
-        # Choose the first action of the best action trajectory:
         action = agent.get_action(observation)
 
         print(action)
